@@ -40,5 +40,5 @@ user@computer:~/$ docker ps -a
 user@computer:~/$ kubectl apply -f ./namespace.yaml
 user@computer:~/$ kubectl apply -f ./ingress/ingress-nginxdeploy.yaml
 user@computer:~/$ ./metallb/metallb_secret.sh
-user@computer:~/$ kubectl apply -f -R ./metallb/
+user@computer:~/$ kubectl apply -R -f ./metallb/
 ```
