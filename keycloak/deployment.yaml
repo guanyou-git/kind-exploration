@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      volumes:
+        - name: keycloak-volume
+          hostPath:
+            path: /data/keycloak
+      containers:
+        - name: keycloak
+          image: keycloak/keycloak:13.0.1
+          imagePullPolicy: Always
+          env:
+            - name: KEYCLOAK_USER
+              value: hello
+            - name: KEYCLOAK_PASSWORD
+              value: world
+            - name: DB_VENDOR
+              value: h2
+            - name: PROXY_ADDRESS_FORWARDING
+              value: "true"
+          volumeMounts:
+            - mountPath: /opt/jboss/keycloak/standalone/data
+              name: keycloak-volume
+          ports:
+            - containerPort: 8443
+              

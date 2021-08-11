@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-tls
+data:
+  tls.crt: LS0..
+  tls.key: LS0..
+type: kubernetes.io/tls

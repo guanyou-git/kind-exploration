@@ -42,3 +42,21 @@ user@computer:~/$ kubectl apply -f ./ingress/ingress-nginxdeploy.yaml
 user@computer:~/$ ./metallb/metallb_secret.sh
 user@computer:~/$ kubectl apply -R -f ./metallb/
 ```
+
+5. setup nfs
+```
+user@computer:~/$ yum install nfs-utils rpcbind
+user@computer:~/$ systemctl enable nfs-server
+user@computer:~/$ systemctl enable rpcbind
+user@computer:~/$ systemctl enable nfs-lock
+user@computer:~/$ systemctl enable nfs-idmap
+user@computer:~/$ systemctl start rpcbind
+user@computer:~/$ systemctl start nfs-server
+user@computer:~/$ systemctl start nfs-lock
+user@computer:~/$ systemctl start nfs-idmap
+user@computer:~/$ systemctl status nfs
+user@computer:~/$ mkdir /home/nfs
+user@computer:~/$# vi /etc/exports
+/home/nfs *(rw)
+user@computer:~/$ exportfs -r
+```
