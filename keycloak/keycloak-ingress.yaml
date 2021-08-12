@@ -1,16 +1,23 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking,k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloak
+  name: keycloak-ingress
+  annotations:
+    #kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-Proto, X-Forwarded-Host, X-Forwarded-For, X-Forwarded-Server, X-Forwarded-Port, X-Real-IP, Host"
+    nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
 spec:
   tls:
     - hosts:
       - keycloak.home.com
+    secretName: app-tls
   rules:
   - host: keycloak.home.com
     http:
       paths:
       - backend:
           serviceName: keycloak
-          servicePort: 8080
-
+          servicePort: 8443
+        path: /
+        pathType: Prefix
