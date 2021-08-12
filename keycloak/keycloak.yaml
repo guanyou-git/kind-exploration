@@ -9,9 +9,12 @@ spec:
   - name: http
     port: 8080
     targetPort: 8080
+  - name: https
+    port: 8443
+    targetPort: 8443
   selector:
     app: keycloak
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,6 +41,8 @@ spec:
           value: "admin"
         - name: KEYCLOAK_PASSWORD
           value: "admin"
+        - name: DB_VENDOR
+          value: h2
         - name: PROXY_ADDRESS_FORWARDING
           value: "true"
         ports:
